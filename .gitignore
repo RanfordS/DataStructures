@@ -1,3 +1,10 @@
+# Don't include the built program
+DataStructures
+# or the asm files
+*.s
+
+# All else is default GitHub settings
+
 # Prerequisites
 *.d
 
