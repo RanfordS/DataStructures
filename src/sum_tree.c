@@ -2,7 +2,7 @@
 
 
 
-void sumTreeDebug (SumTree* tree)
+void sumTreeDebug (const SumTree* tree)
 {
     size_t layer = 0;
     size_t limit = 1;
@@ -23,21 +23,29 @@ void sumTreeDebug (SumTree* tree)
 
 
 
-uint32_t sumTreeIndex (SumTree* tree, size_t index)
+uint32_t* sumTreeLeafPointer (const SumTree* tree)
 {
-    return tree->data[index + (1 << tree->depth) - 1];
+    return tree->data + (1 << tree->depth) - 1;
 }
 
 
 
-bool sumTreeAllocate (SumTree* tree, size_t depth)
+bool sumTreeAllocateLayers (SumTree* tree, size_t depth)
 {
     tree->depth = depth;
-    tree->used = 0;
     size_t size = (2 << depth) - 1;
     uint32_t* mem = calloc (size, sizeof (uint32_t));
     tree->data = mem;
     return !mem;
+}
+
+
+
+bool sumTreeAllocateCount (SumTree* tree, size_t count)
+{
+    size_t layers = 0;
+    while ((1 << layers) < count) ++layers;
+    return sumTreeAllocateLayers (tree, layers);
 }
 
 
@@ -67,13 +75,6 @@ void sumTreeSet (SumTree* tree, size_t index, uint32_t value)
 
 
 
-void sumTreeInsert (SumTree* tree, uint32_t value)
-{
-    sumTreeSet (tree, tree->used++, value);
-}
-
-
-
 void sumTreeRecalculate (SumTree* tree)
 {
     size_t index = (1 << tree->depth) - 1;
@@ -86,21 +87,7 @@ void sumTreeRecalculate (SumTree* tree)
 
 
 
-void sumTreeRemove (SumTree* tree, size_t index)
-{
-    // this was a mistake, re-evaluate
-    abort ();
-    /*
-    size_t   tailIndex = --tree->used;
-    uint32_t tailValue = sumTreeIndex (tree, tailIndex);
-    sumTreeSet (tree, index, tailValue);
-    sumTreeSet (tree, tailIndex, 0);
-    */
-}
-
-
-
-size_t sumTreeFind (SumTree* tree, uint32_t query)
+size_t sumTreeFind (const SumTree* tree, uint32_t query)
 {
     size_t index = 0;
 

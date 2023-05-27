@@ -7,17 +7,16 @@ int main (int argc, char** argv)
 
     {
         SumTree tree;
-        sumTreeAllocate (&tree, 2);
+        sumTreeAllocateCount (&tree, 4);
 
-        sumTreeInsert (&tree, 1);
-        sumTreeInsert (&tree, 2);
-        sumTreeInsert (&tree, 3);
-        sumTreeInsert (&tree, 4);
+        sumTreeSet (&tree, 0, 1);
+        sumTreeSet (&tree, 1, 2);
+        sumTreeSet (&tree, 2, 3);
+        sumTreeSet (&tree, 3, 4);
 
         sumTreeSet (&tree, 2, 7);
 
         printf ("-----\n");
-        //sumTreeRemove (&tree, 0);
 
         sumTreeRelease (&tree);
     }
