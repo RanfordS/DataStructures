@@ -64,12 +64,28 @@ void sumTreeInsert (SumTree* tree, uint32_t value)
 
 
 
+void sumTreeRecalculate (SumTree* tree)
+{
+    size_t index = (1 << tree->depth) - 1;
+    while (index--)
+    {
+        size_t left = 2*index + 1;
+        tree->data[index] = tree->data[left] + tree->data[left + 1];
+    }
+}
+
+
+
 void sumTreeRemove (SumTree* tree, size_t index)
 {
+    // this was a mistake, re-evaluate
+    abort ();
+    /*
     size_t   tailIndex = --tree->used;
     uint32_t tailValue = sumTreeIndex (tree, tailIndex);
     sumTreeSet (tree, index, tailValue);
     sumTreeSet (tree, tailIndex, 0);
+    */
 }
 
 
