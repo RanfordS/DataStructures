@@ -17,7 +17,7 @@ int main (int argc, char** argv)
         sumTreeSet (&tree, 2, 7);
 
         printf ("-----\n");
-        sumTreeRemove (&tree, 0);
+        //sumTreeRemove (&tree, 0);
 
         sumTreeRelease (&tree);
     }

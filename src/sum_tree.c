@@ -4,7 +4,21 @@
 
 void sumTreeDebug (SumTree* tree)
 {
-    //TODO
+    size_t layer = 0;
+    size_t limit = 1;
+    size_t index = 0;
+    while (layer <= tree->depth)
+    {
+        printf ("%i ", tree->data[index]);
+
+        ++index;
+        if (index >= limit)
+        {
+            ++layer;
+            limit = 2*limit + 1;
+            printf ("\n");
+        }
+    }
 }
 
 
@@ -48,11 +62,7 @@ void sumTreeSet (SumTree* tree, size_t index, uint32_t value)
         tree->data[index] = tree->data[left] + tree->data[left + 1];
     }
 
-    for (size_t i = 0; i < (2 << tree->depth) - 1; ++i)
-    {
-        printf ("%2i ", tree->data[i]);
-    }
-    printf ("\n");
+    sumTreeDebug (tree);
 }
 
 
