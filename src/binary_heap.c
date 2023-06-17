@@ -38,6 +38,7 @@ void binaryHeapDebug (const BinaryHeap* heap)
         else onNewLine = false;
     }
     if (!onNewLine) printf ("\n");
+    printf ("\n");
 }
 
 
@@ -109,6 +110,7 @@ void binaryHeapInsert (BinaryHeap* heap, uint32_t element)
 {
     size_t index = heap->used++;
     binaryHeapBubbleUp (heap, index, element);
+    binaryHeapDebug (heap);
 }
 
 
@@ -118,6 +120,8 @@ uint32_t binaryHeapPop (BinaryHeap* heap)
     uint32_t result = heap->data[0];
     size_t tailIndex = --heap->used;
     binaryHeapBubbleDown (heap, 0, heap->data[tailIndex]);
+    printf ("popped %u\n", result);
+    binaryHeapDebug (heap);
     return result;
 }
 

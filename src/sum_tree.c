@@ -19,6 +19,7 @@ void sumTreeDebug (const SumTree* tree)
             printf ("\n");
         }
     }
+    printf ("\n");
 }
 
 
