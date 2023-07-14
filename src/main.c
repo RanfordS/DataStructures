@@ -2,6 +2,7 @@
 #include "sum_tree.h"
 #include "binary_heap.h"
 #include "priority_queue.h"
+#include "prims.h"
 
 int main (int argc, char** argv)
 {
@@ -77,6 +78,64 @@ int main (int argc, char** argv)
         printf ("-----\n");
 
         priorityQueueRelease (&queue);
+    }
+
+    printf ("Prims\n");
+
+    {
+        Graph graph;
+        graphAllocate (&graph, 5, 6);
+        {
+            size_t i = 0;
+            graph.edge[i].from = 0;
+            graph.edge[i].to   = 1;
+            graph.edge[i].weight = 3;
+            ++i;
+            graph.edge[i].from = 1;
+            graph.edge[i].to   = 2;
+            graph.edge[i].weight = 4;
+            ++i;
+            graph.edge[i].from = 2;
+            graph.edge[i].to   = 3;
+            graph.edge[i].weight = 5;
+            ++i;
+            graph.edge[i].from = 3;
+            graph.edge[i].to   = 4;
+            graph.edge[i].weight = 6;
+            ++i;
+            graph.edge[i].from = 1;
+            graph.edge[i].to   = 3;
+            graph.edge[i].weight = 1;
+            ++i;
+            graph.edge[i].from = 2;
+            graph.edge[i].to   = 4;
+            graph.edge[i].weight = 8;
+        }
+        printf ("Source graph:\n");
+        for (size_t i = 0; i < graph.edgeCount; ++i)
+        {
+            printf ("edge[%lu] from %lu to %lu with weight %lu\n",
+                    i,
+                    graph.edge[i].from,
+                    graph.edge[i].to,
+                    graph.edge[i].weight);
+        }
+        
+        printf ("\nMinimum Spanning Tree:\n");
+        
+        Graph min = prims (&graph);
+        for (size_t i = 0; i < min.edgeCount; ++i)
+        {
+            printf ("edge[%lu] from %lu to %lu with weight %lu\n",
+                    i,
+                    min.edge[i].from,
+                    min.edge[i].to,
+                    min.edge[i].weight);
+        }
+
+        printf ("\n-----\n");
+        graphRelease (&graph);
+        graphRelease (&min);
     }
 
     return 0;
